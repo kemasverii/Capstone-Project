@@ -110,7 +110,7 @@ def perbarui_data_karyawan():
         print("\n--- Menu Update Data Karyawan ---")
         print("1. Update Data Karyawan")
         print("2. Kembali ke Menu Utama")
-        
+
         try:
             pilihan = int(input("Pilih opsi: "))
             if pilihan == 1:
@@ -123,37 +123,41 @@ def perbarui_data_karyawan():
                 if not karyawan:
                     print("Data karyawan tidak ditemukan.")
                     continue
+
                 tampilkan_data([karyawan])
                 lanjut = input("Ingin melanjutkan update data? (ya/tidak): ").strip().lower()
                 if lanjut != 'ya':
                     continue
+                while True:
+                    kolom_pilihan = input("Masukkan nama kolom yang ingin diupdate (nama, jabatan, departemen, gaji, pendidikan): ").strip().lower()
+                    if kolom_pilihan == 'id_karyawan':
+                        print("Akses ditolak! ID Karyawan tidak dapat diubah.")
+                        continue  
+                    if kolom_pilihan in karyawan:
+                        nilai_baru = input(f"Masukkan {kolom_pilihan} baru: ")
+                        while True:
+                            try:
+                                simpan = input("Simpan perubahan? (ya/tidak): ").strip().lower()
+                                if simpan not in ('ya', 'tidak'):
+                                    raise ValueError("Input tidak valid! Pilih 'ya' atau 'tidak'.")
+                                if simpan == 'ya':
+                                    karyawan[kolom_pilihan] = nilai_baru
+                                    print("Data karyawan berhasil diperbarui!")
+                                else:
+                                    print("Perubahan dibatalkan.")
+                                return
+                            except ValueError as eror:
+                                print(eror)
+                    else:
+                        print("Kolom tidak valid. Silakan masukkan nama kolom yang benar.")
                 
-                kolom_pilihan = input("Masukkan nama kolom yang ingin diupdate (nama, jabatan, departemen, gaji, pendidikan): ").strip().lower()
-                if kolom_pilihan in karyawan:
-                    nilai_baru = input(f"Masukkan {kolom_pilihan} baru: ")
-                    while True:
-                        try:
-                            simpan = input("Simpan perubahan? (ya/tidak): ").strip().lower()
-                            if simpan not in ('ya', 'tidak'):
-                                raise ValueError("Input tidak valid! Pilih 'ya' atau 'tidak'.")
-                            if simpan == 'ya':
-                                karyawan[kolom_pilihan] = nilai_baru
-                                print("Data karyawan berhasil diperbarui!")
-                            else:
-                                print("Perubahan dibatalkan.")
-                            break
-                        except ValueError as eror:
-                            print(eror)
-                else:
-                    print("Kolom tidak valid. Silakan masukkan nama kolom yang benar.")
-                continue
-            
             elif pilihan == 2:
                 return
             else:
-                print("Opsi input yang anda masukkan tidak valid.")
+                print("Opsi input yang Anda masukkan tidak valid.")
         except ValueError:
-            print("Opsi input yang anda masukkan tidak valid.")
+            print("Opsi input yang Anda masukkan tidak valid.")
+
 
 def hapus_data_karyawan():
     while True:
@@ -222,4 +226,3 @@ def MulaiProgram():
             break
 
 MulaiProgram()
-
